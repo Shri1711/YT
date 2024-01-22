@@ -1,0 +1,68 @@
+package practice;
+import java.util.*;
+class Channel
+{
+	String Title;
+	List<Customer_Subscriber> l1=new ArrayList<>();
+	public void subscribe(Customer_Subscriber sub)
+	{
+		l1.add(sub);
+	}
+	public void unSubscribe(Customer_Subscriber sub) 
+	{
+		l1.remove(sub);		
+	}
+	public void upload(String title) 
+	{	
+		this.Title=title;
+		notifySubscribers();
+	}
+	public void notifySubscribers()
+	{
+		for(Customer_Subscriber sub : l1)
+		{
+			sub.update();
+		}
+	}	
+}
+class Customer_Subscriber 
+{
+	Channel WorldAffairs=new Channel();
+	String NAME;
+	public Customer_Subscriber(String name) 
+	{
+		NAME=name;
+	}
+	public void subscribeChannel(Channel ch) 
+	{
+		WorldAffairs=ch;
+	}	
+	public void update()
+	{
+		System.out.println("Hello "+NAME +" , Video Uploaded : "+WorldAffairs.Title);
+	}
+}
+public class Youtube
+{
+	public static void main(String[] args) 
+	{
+		Channel c=new Channel();
+		Customer_Subscriber cs1=new Customer_Subscriber("shri");
+		Customer_Subscriber cs2=new Customer_Subscriber("vikash");
+		Customer_Subscriber cs3=new Customer_Subscriber("ram");
+		Customer_Subscriber cs4=new Customer_Subscriber("Pranav");
+		Customer_Subscriber cs5=new Customer_Subscriber("Atul");
+		c.subscribe(cs1);
+		c.subscribe(cs2);
+		c.subscribe(cs3);
+		c.subscribe(cs4);
+		c.subscribe(cs5);
+		c.unSubscribe(cs3);		
+        cs1.subscribeChannel(c);
+        cs2.subscribeChannel(c);
+        cs3.subscribeChannel(c);
+        cs4.subscribeChannel(c);
+        cs5.subscribeChannel(c);    
+        c.upload("India Maldives Relation ");
+	}
+}
